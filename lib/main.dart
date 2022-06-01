@@ -10,8 +10,50 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String dorpDownValue = "Single";
-    String dorpDownValue1 = "02";
+    int dorpDownValue1 = 02;
     bool checkValue = false;
+    Widget options(int optionNumber) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: TextField(
+              maxLines: null,
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                labelText: "Option:$optionNumber",
+                labelStyle: const TextStyle(color: Colors.white),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(color: Colors.white),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(color: Colors.white),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            child: StatefulBuilder(
+              builder: (BuildContext context, setState) {
+                return Checkbox(
+                  checkColor: Colors.black,
+                  activeColor: Colors.white,
+                  side: const BorderSide(color: Colors.white),
+                  value: checkValue,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      checkValue = value!;
+                    });
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      );
+    }
 
     return GestureDetector(
       onTap: () {
@@ -69,26 +111,28 @@ class MyApp extends StatelessWidget {
                                 const SizedBox(width: 10),
                                 StatefulBuilder(builder: (BuildContext context,
                                     StateSetter setState) {
-                                  return DropdownButton<String>(
-                                    dropdownColor: Colors.white,
+                                  return DropdownButton<int>(
+                                    dropdownColor: Colors.black,
                                     underline: const SizedBox(),
                                     value: dorpDownValue1,
                                     elevation: 16,
                                     style: const TextStyle(color: Colors.white),
-                                    onChanged: (String? newValue) {
+                                    onChanged: (int? newValue) {
                                       setState(() {
                                         dorpDownValue1 = newValue!;
                                       });
                                     },
-                                    items: <String>['02', '03', '04']
-                                        .map<DropdownMenuItem<String>>(
-                                            (String value) {
-                                      return DropdownMenuItem<String>(
+                                    items: <int>[
+                                      02,
+                                      03,
+                                      04
+                                    ].map<DropdownMenuItem<int>>((int value) {
+                                      return DropdownMenuItem<int>(
                                         value: value,
                                         child: Text(
-                                          value,
+                                          '$value',
                                           style: const TextStyle(
-                                              color: Colors.black),
+                                              color: Colors.white),
                                         ),
                                       );
                                     }).toList(),
@@ -125,7 +169,7 @@ class MyApp extends StatelessWidget {
                                   return DropdownButton<String>(
                                     value: dorpDownValue,
                                     underline: const SizedBox(),
-                                    dropdownColor: Colors.white,
+                                    dropdownColor: Colors.black,
                                     elevation: 16,
                                     style: const TextStyle(color: Colors.white),
                                     onChanged: (String? newValue) {
@@ -141,7 +185,7 @@ class MyApp extends StatelessWidget {
                                         child: Text(
                                           value,
                                           style: const TextStyle(
-                                              color: Colors.black),
+                                              color: Colors.white),
                                         ),
                                       );
                                     }).toList(),
@@ -154,93 +198,17 @@ class MyApp extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            maxLines: null,
-                            style: const TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                              labelText: "Option:1",
-                              labelStyle: const TextStyle(color: Colors.white),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide:
-                                    const BorderSide(color: Colors.white),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide:
-                                    const BorderSide(color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                          child: StatefulBuilder(
-                            builder: (BuildContext context, setState) {
-                              return Checkbox(
-                                checkColor: Colors.black,
-                                activeColor: Colors.white,
-                                side: const BorderSide(color: Colors.white),
-                                value: checkValue,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    checkValue = value!;
-                                  });
-                                },
-                              );
-                            },
-                          ),
-                        )
-                      ],
-                    ),
+                    options(1),
                     const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            maxLines: null,
-                            style: const TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                              labelText: "Option:2",
-                              labelStyle: const TextStyle(color: Colors.white),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide:
-                                    const BorderSide(color: Colors.white),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide:
-                                    const BorderSide(color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          child: StatefulBuilder(
-                            builder: (BuildContext context, setState) {
-                              return Checkbox(
-                                checkColor: Colors.black,
-                                activeColor: Colors.white,
-                                side: const BorderSide(color: Colors.white),
-                                value: checkValue,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    checkValue = value!;
-                                  });
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
+                    options(2),
                     const SizedBox(height: 20),
+                    StatefulBuilder(
+                      builder: (BuildContext context, setState) {
+                        return dorpDownValue1 == 3
+                            ? options(dorpDownValue1)
+                            : options(0);
+                      },
+                    )
                   ],
                 ),
               ),
